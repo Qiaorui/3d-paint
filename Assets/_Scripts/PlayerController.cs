@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.CompareTag ("Paint")) {
 
 			currentCollisions.Add (other.gameObject);
-			Debug.Log("Total trigger:" + currentCollisions.Count);
 		}
 		/*foreach (GameObject gObject in currentCollisions) {
              print (gObject.name);
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour
 	void OnTriggerExit (Collider other) {
 		if (other.gameObject.CompareTag ("Paint")) {
 			currentCollisions.Remove (other.gameObject);
-			Debug.Log("Total trigger:" + currentCollisions.Count);
 		}
 	}
 
