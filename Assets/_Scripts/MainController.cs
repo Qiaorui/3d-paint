@@ -81,25 +81,39 @@ public class MainController : MonoBehaviour {
 		{
 			isPainting = false;
 			if (buffer.Count > 0 && brush == Brushes.Line) {
-				GameObject newLine = Instantiate(line, player.transform.position, player.transform.rotation) as GameObject;
+				GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
 				LineRenderer lr = newLine.GetComponent<LineRenderer>();
-				lr.useWorldSpace = false;
+				
 				lr.material = new Material(Shader.Find("Particles/Additive"));
 				lr.SetColors(color, color);
 				lr.SetWidth(size/2,size/2	);
 				lr.SetVertexCount(buffer.Count);
+				
 				for (int i = 0; i < buffer.Count ; ++i) {
+					Debug.Log("buffer "+i + " :" + buffer[i].transform.position.ToString("F4"));
+					/*
+					GameObject clone = Instantiate(cube, buffer[i].transform.position, Quaternion.identity) as GameObject;
+					clone.transform.localScale = new Vector3(clone.transform.localScale.x * size, clone.transform.localScale.y * size, clone.transform.localScale.z * size);
+					clone.transform.GetComponent<Renderer>().material.color = color;
+					clone.transform.parent = canvas.transform;
+					*/
+					
+					
 					lr.SetPosition(i,buffer[i].transform.position);
 				}
 				newLine.transform.parent = canvas.transform;
-
+				lr.useWorldSpace = false;
 				foreach (GameObject obj in buffer) {
 					Destroy(obj);
 				}
 				buffer.Clear();
 				
 			}
+
 		}
+		//if (Input.GetKeyUp (KeyCode.S)) {
+
+		//}
 		if (Input.GetKeyDown(KeyCode.B) && Time.time > nextAction)
 		{
 			nextAction = Time.time + rate;

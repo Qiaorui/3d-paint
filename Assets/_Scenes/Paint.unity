@@ -251,8 +251,8 @@ Camera:
   m_GameObject: {fileID: 614231944}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -293,8 +293,8 @@ MonoBehaviour:
   StereoEye: 1
   Optical: 0
   OpticalParamsFilenameIndex: 0
-  OpticalParamsFilename: 
-  OpticalParamsFileContents: 
+  OpticalParamsFilename: optical_param_left
+  OpticalParamsFileContents: 4028ee4b400000003ff89143c00000003fefde7080000000bfa796c7000000003fb3d7168000000000000000000000003fa99eca000000003fefd45780000000bfa88e06c00000000000000000000000bfb3480bc00000003faa7095c00000003fefc5d8800000000000000000000000405ca8eb40000000c02c3ae540000000c038fe3ba00000003ff0000000000000
   OpticalEyeLateralOffsetRight: 0
 --- !u!1 &1244709702
 GameObject:
@@ -406,9 +406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7618c1dc7110845bae2da2df8d73bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rate: .5
+  rate: .10000000000000001
   color: {r: .310611635, g: .061094299, b: .83088237, a: 1}
-  size: .0199999996
+  size: .00999999978
   player: {fileID: 1967873615}
   camera: {fileID: 614231945}
   canvas: {fileID: 1244709703}
