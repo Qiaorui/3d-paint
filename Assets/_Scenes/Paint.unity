@@ -224,6 +224,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 491961366}
+  - {fileID: 1244709703}
   m_Father: {fileID: 1277133540}
   m_RootOrder: 0
 --- !u!81 &614231946
@@ -327,8 +328,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 614231945}
+  m_RootOrder: 1
 --- !u!114 &1244709704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +342,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 614231945}
+  offset: {x: 0, y: 0, z: 0}
+  inspect: 0
 --- !u!1 &1277133539
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +449,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09498bc6ad4bfc4419072c7852ac412c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wiiButtons:
+    a: 0
+    b: 0
+    one: 0
+    two: 0
+    d_up: 0
+    d_down: 0
+    d_left: 0
+    d_right: 0
+    plus: 0
+    minus: 0
+    home: 0
   buttons:
     a: 0
     b: 0
