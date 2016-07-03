@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		//if(WiimoteDemoButtons.wiiButtons.a==true)
+
 		if (Input.GetKeyDown(KeyCode.R)) {
 			foreach (GameObject gObject in currentCollisions) {
 				//currentCollisions.Remove(gObject);
