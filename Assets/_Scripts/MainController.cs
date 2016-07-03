@@ -72,12 +72,12 @@ public class MainController : MonoBehaviour {
 	void Update () 
 	{
 		
-		if (Input.GetKeyDown(KeyCode.P)) {
+		if (Input.GetKeyDown(KeyCode.P)||WiimoteDemoButtons.clicked.a) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
 			isPainting = true;
 		}
-		if (Input.GetKeyUp(KeyCode.P))
+		if (Input.GetKeyUp(KeyCode.P) || (!WiimoteDemoButtons.clicked.a && isPainting))
 		{
 			isPainting = false;
 			if (buffer.Count > 0 && brush == Brushes.Line) {
@@ -114,10 +114,15 @@ public class MainController : MonoBehaviour {
 		//if (Input.GetKeyUp (KeyCode.S)) {
 
 		//}
-		if (Input.GetKeyDown(KeyCode.B) && Time.time > nextAction)
+		if ((Input.GetKeyDown(KeyCode.B)||WiimoteDemoButtons.clicked.plus) && Time.time > nextAction)
 		{
 			nextAction = Time.time + rate;
 			brush = (Brushes)(((int)brush + 1) % Enum.GetNames(typeof(Brushes)).Length);
+		}
+		if (WiimoteDemoButtons.clicked.minus && Time.time > nextAction)
+		{
+			nextAction = Time.time + rate;
+			brush = (Brushes)(((int)brush +Enum.GetNames(typeof(Brushes)).Length-1) % Enum.GetNames(typeof(Brushes)).Length);
 		}
 	}
 	
