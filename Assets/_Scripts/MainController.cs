@@ -129,9 +129,9 @@ public class MainController : MonoBehaviour {
 				GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
 				lineRenderer = newLine.GetComponent<LineRenderer>();
 				
-				lineRenderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
+				//lineRenderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
 				lineRenderer.SetColors(color, color);
-				lineRenderer.SetWidth(size/2,size/2	);
+				lineRenderer.SetWidth(size,size);
 				lineRenderer.SetVertexCount(0);
 				//lineRenderer.useWorldSpace = false;
 				//lineRenderer.transform.parent = canvas.transform;
