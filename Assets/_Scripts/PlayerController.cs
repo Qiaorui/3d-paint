@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//if(WiimoteDemoButtons.wiiButtons.a==true)
 
-		if (Input.GetKeyDown(KeyCode.R)||WiimoteDemoButtons.clicked.b) {
+		if (Input.GetKeyDown(KeyCode.R)||WiimoteDemoButtons.clicked.a) {
 			foreach (GameObject gObject in currentCollisions) {
 				//currentCollisions.Remove(gObject);
 				Destroy(gObject);

@@ -107,7 +107,7 @@ public class MainController : MonoBehaviour {
 			menuOpen = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.E) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home && menuOpen)) {
+		if (Input.GetKeyDown (KeyCode.E) || (WiimoteDemoButtons.wiiDetected && !WiimoteDemoButtons.clicked.home && menuOpen)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
 			menuOpen = false;
@@ -118,34 +118,33 @@ public class MainController : MonoBehaviour {
 		} else {
 			menu.SetActive (false);
 		}
+		if (!menuOpen && !WiimoteDemoButtons.inspect) {
+			if (Input.GetKeyDown (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.b)) {
+				//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
+				//clone.transform.parent = camera.transform;
+				isPainting = true;
 
-		if (!menuOpen && Input.GetKeyDown(KeyCode.P)||(WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
-			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
-			//clone.transform.parent = camera.transform;
-			isPainting = true;
-
-			if(brush == Brushes.Line) 
-			{
-				GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
-				lineRenderer = newLine.GetComponent<LineRenderer>();
+				if (brush == Brushes.Line) {
+					GameObject newLine = Instantiate (line, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+					lineRenderer = newLine.GetComponent<LineRenderer> ();
 				
-				lineRenderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
-				lineRenderer.SetColors(color, color);
-				lineRenderer.SetWidth(size/2,size/2	);
-				lineRenderer.SetVertexCount(0);
-				//lineRenderer.useWorldSpace = false;
-				//lineRenderer.transform.parent = canvas.transform;
-				index = 0;
-			}
+					lineRenderer.material = new Material (Shader.Find ("Particles/Alpha Blended"));
+					lineRenderer.SetColors (color, color);
+					lineRenderer.SetWidth (size / 2, size / 2);
+					lineRenderer.SetVertexCount (0);
+					//lineRenderer.useWorldSpace = false;
+					//lineRenderer.transform.parent = canvas.transform;
+					index = 0;
+				}
 
-		}
-		if (!menuOpen && Input.GetKeyUp(KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a && isPainting))
-		{
-			isPainting = false;
-			if (buffer.Count > 0 && brush == Brushes.Line) {
-				lineRenderer.useWorldSpace = false;
-				lineRenderer.transform.parent = canvas.transform;
-				/*GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
+			}
+	
+			if (Input.GetKeyUp (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && !WiimoteDemoButtons.clicked.b && isPainting)) {
+				isPainting = false;
+				if (buffer.Count > 0 && brush == Brushes.Line) {
+					lineRenderer.useWorldSpace = false;
+					lineRenderer.transform.parent = canvas.transform;
+					/*GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
 				LineRenderer lr = newLine.GetComponent<LineRenderer>();
 				
 				lr.material = new Material(Shader.Find("Particles/Additive"));
@@ -163,26 +162,25 @@ public class MainController : MonoBehaviour {
 				newLine.transform.parent = canvas.transform;
 				lr.useWorldSpace = false;
 				*/
-				foreach (GameObject obj in buffer) {
-					Destroy(obj);
-				}
-				buffer.Clear();
+					foreach (GameObject obj in buffer) {
+						Destroy (obj);
+					}
+					buffer.Clear ();
 				
+				}
+
 			}
+			//if (Input.GetKeyUp (KeyCode.S)) {
 
-		}
-		//if (Input.GetKeyUp (KeyCode.S)) {
-
-		//}
-		if ((Input.GetKeyDown(KeyCode.B)||(WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.plus)) && Time.time > nextAction)
-		{
-			nextAction = Time.time + rate;
-			brush = (Brushes)(((int)brush + 1) % Enum.GetNames(typeof(Brushes)).Length);
-		}
-		if (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.minus && Time.time > nextAction)
-		{
-			nextAction = Time.time + rate;
-			brush = (Brushes)(((int)brush +Enum.GetNames(typeof(Brushes)).Length-1) % Enum.GetNames(typeof(Brushes)).Length);
+			//}
+			if ((Input.GetKeyDown (KeyCode.B) || (WiimoteDemoButtons.clicked.plus)) && Time.time > nextAction) {
+				nextAction = Time.time + rate;
+				brush = (Brushes)(((int)brush + 1) % Enum.GetNames (typeof(Brushes)).Length);
+			}
+			if (WiimoteDemoButtons.clicked.minus && Time.time > nextAction) {
+				nextAction = Time.time + rate;
+				brush = (Brushes)(((int)brush + Enum.GetNames (typeof(Brushes)).Length - 1) % Enum.GetNames (typeof(Brushes)).Length);
+			}
 		}
 	}
 	
