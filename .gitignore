@@ -38,3 +38,4 @@ obj/
 .Trashes
 ehthumbs.db
 [Tt]humbs.db
+Assets/_Scripts/MainController.cs
