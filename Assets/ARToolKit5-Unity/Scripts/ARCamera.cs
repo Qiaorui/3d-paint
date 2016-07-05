@@ -152,7 +152,7 @@ public class ARCamera : MonoBehaviour
 		}
 		
 		// Don't clear anything or else we interfere with other foreground cameras
-		c.clearFlags = CameraClearFlags.Nothing;
+		//c.clearFlags = CameraClearFlags.Nothing;
 		
 		// Renders after the clear and background cameras
 		c.depth = 2;
