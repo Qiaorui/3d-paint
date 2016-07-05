@@ -567,7 +567,7 @@ MonoBehaviour:
   point: {fileID: 177164, guid: dd63d0c01b045f04ab9ec9f0252b9a65, type: 2}
   line: {fileID: 147082, guid: 7d9a772e27a67004f9d3565ec22416df, type: 2}
   cube: {fileID: 131650, guid: 5941b7b6f1cbb654ca00acc4f7a032f6, type: 2}
-  gap: {fileID: 122904, guid: 5f8e50b75239827498db2898418217be, type: 2}
+  gap: {fileID: 114642, guid: 5f8e50b75239827498db2898418217be, type: 2}
 --- !u!4 &1538197759
 Transform:
   m_ObjectHideFlags: 0
