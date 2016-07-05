@@ -9,6 +9,10 @@ sysinfo.txt
 *.stackdump 
 Assets/Wiimote/Plugins/win32.meta
 Assets/Wiimote/Plugins/win64.meta
+Assets/Audio.meta
+Assets/Materials.meta
+Assets/Models.meta
+Assets/Textures.meta
 
 
 
