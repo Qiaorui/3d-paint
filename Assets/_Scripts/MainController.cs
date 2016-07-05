@@ -12,6 +12,7 @@ public class MainController : MonoBehaviour {
 	public float size = 1;
 
 	public GameObject player;
+	public GameObject menu;
 	public Transform camera;
 	public Transform canvas;
 	private double nextAction;
@@ -33,6 +34,7 @@ public class MainController : MonoBehaviour {
 
 	private Brushes brush;
     private bool isPainting;
+	private bool MenuOpen;
 
 
 
@@ -45,6 +47,9 @@ public class MainController : MonoBehaviour {
 		player.transform.localScale =new Vector3 (size, size, size);
 		player.transform.GetComponent<Renderer> ().material.color = color;
         brush = Brushes.Sphere;
+		isPainting = false;
+		MenuOpen = false;
+
 
 	}
 
@@ -95,7 +100,25 @@ public class MainController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		//turn on the menu
+		if (Input.GetKeyDown (KeyCode.M) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home)) {
+			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
+			//clone.transform.parent = camera.transform;
+			MenuOpen = true;
+		}
+
+		if (Input.GetKeyDown (KeyCode.E) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home && MenuOpen)) {
+			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
+			//clone.transform.parent = camera.transform;
+			MenuOpen = false;
+		}
+
+		if (MenuOpen) {
+			menu.SetActive (true);
+		} else {
+			menu.SetActive (false);
+		}
+
 		if (Input.GetKeyDown(KeyCode.P)||(WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
