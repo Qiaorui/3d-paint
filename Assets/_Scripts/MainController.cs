@@ -13,6 +13,7 @@ public class MainController : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject menu;
+	public GameObject drawing;
 	public Transform camera;
 	public Transform canvas;
 	private double nextAction;
@@ -35,6 +36,7 @@ public class MainController : MonoBehaviour {
 	private Brushes brush;
     private bool isPainting;
 	private bool menuOpen;
+	private string selectedOption;
 
 
 
@@ -49,7 +51,7 @@ public class MainController : MonoBehaviour {
         brush = Brushes.Sphere;
 		isPainting = false;
 		menuOpen = false;
-
+		selectedOption = "None";
 
 	}
 
@@ -115,8 +117,22 @@ public class MainController : MonoBehaviour {
 
 		if (menuOpen) {
 			menu.SetActive (true);
+			drawing.SetActive (false);
+
+			RaycastHit ObstacleHit;
+
+			if(Physics.Raycast(player.transform.position, camera.position - player.transform.position , out ObstacleHit)){
+				selectedOption = ObstacleHit.collider.tag;
+				Debug.DrawLine(camera.position - player.transform.position,ObstacleHit.point,Color.green);
+				Debug.Log("Hit an object");
+			}
+
 		} else {
 			menu.SetActive (false);
+			drawing.SetActive (true);
+
+
+
 		}
 		if (!menuOpen && !WiimoteDemoButtons.inspect) {
 			if (Input.GetKeyDown (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.b)) {
@@ -188,6 +204,7 @@ public class MainController : MonoBehaviour {
 	{
 		GUILayout.Label("Press B to change Brush");
 		GUILayout.Label("Current brush : " + brush);
+		GUILayout.Label("Collided with : " + selectedOption);
 	}
 	
 }

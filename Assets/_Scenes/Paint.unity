@@ -188,7 +188,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
   m_LocalPosition: {x: 0, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 614231945}
   m_RootOrder: 0
@@ -496,7 +496,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 614231945}
   offset: {x: 0, y: 0, z: 0}
+  offsetR: {x: 0, y: 0, z: 0}
   inspect: 0
+  rotate: 0
 --- !u!1 &1277133539
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +524,7 @@ Transform:
   m_LocalRotation: {x: 0.7071069, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children:
   - {fileID: 614231945}
   - {fileID: 188577964}
@@ -574,12 +576,13 @@ MonoBehaviour:
   size: 0.01
   player: {fileID: 1967873615}
   menu: {fileID: 1681771542}
+  drawing: {fileID: 1244709702}
   camera: {fileID: 614231945}
   canvas: {fileID: 1244709703}
   point: {fileID: 177164, guid: dd63d0c01b045f04ab9ec9f0252b9a65, type: 2}
   line: {fileID: 147082, guid: 7d9a772e27a67004f9d3565ec22416df, type: 2}
   cube: {fileID: 131650, guid: 5941b7b6f1cbb654ca00acc4f7a032f6, type: 2}
-  gap: {fileID: 126460, guid: f5a42150caae14d6aab79b832a4cd16f, type: 2}
+  gap: {fileID: 114642, guid: 5f8e50b75239827498db2898418217be, type: 2}
 --- !u!4 &1538197759
 Transform:
   m_ObjectHideFlags: 0
@@ -655,7 +658,7 @@ Transform:
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0.030000005}
   m_LocalScale: {x: 0.06, y: 0.060000006, z: 0.060000006}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 188577964}
   m_RootOrder: 0

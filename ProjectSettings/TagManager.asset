@@ -9,6 +9,8 @@ TagManager:
   - Glove
   - Target
   - Paint
+  - Menu1
+  - Menu2
   layers:
   - Default
   - TransparentFX
