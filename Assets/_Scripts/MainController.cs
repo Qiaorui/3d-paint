@@ -19,11 +19,22 @@ public class MainController : MonoBehaviour {
 	public GameObject point;
 	public GameObject line;
 	public GameObject cube;
+	public GameObject gap;
+
+
+
+
 
 	private List<GameObject> buffer = new List<GameObject>();
+	private LineRenderer lineRenderer;
+	private int index;
+
+
 
 	private Brushes brush;
     private bool isPainting;
+
+
 
 
     enum Brushes { Sphere, Line, Paint, Neon, Cube };
@@ -56,14 +67,27 @@ public class MainController : MonoBehaviour {
 			clone.transform.parent = canvas.transform;
 		}
 		
-		if (isPainting && brush == Brushes.Line && Time.time > nextAction)
+		if (isPainting && brush == Brushes.Line)
 		{
-			nextAction = Time.time + rate;
-			GameObject clone = Instantiate(point, player.transform.position, player.transform.rotation) as GameObject;
-			clone.transform.localScale = new Vector3(clone.transform.localScale.x * size, clone.transform.localScale.y * size, clone.transform.localScale.z * size);
-			clone.transform.GetComponent<Renderer>().material.color = color;
-			clone.transform.parent = canvas.transform;
-			buffer.Add(clone);
+
+			if (Time.time > nextAction) 
+			{
+				nextAction = Time.time + rate;
+				GameObject clone = Instantiate(gap, player.transform.position, player.transform.rotation) as GameObject;
+				//clone.transform.localScale = new Vector3(clone.transform.localScale.x * size, clone.transform.localScale.y * size, clone.transform.localScale.z * size);
+				//clone.transform.GetComponent<Renderer>().material.color = color;
+				clone.transform.parent = canvas.transform;
+				buffer.Add(clone);
+
+				lineRenderer.SetVertexCount(index+1);
+				lineRenderer.SetPosition(index, buffer[index].transform.position);
+				++index;
+			}
+			for (int i = 0; i < index ; ++i) 
+			{
+				lineRenderer.SetPosition(i,buffer[i].transform.position);
+			}
+
 		}
 		
 	}
@@ -76,12 +100,29 @@ public class MainController : MonoBehaviour {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
 			isPainting = true;
+
+			if(brush == Brushes.Line) 
+			{
+				GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
+				lineRenderer = newLine.GetComponent<LineRenderer>();
+				
+				lineRenderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
+				lineRenderer.SetColors(color, color);
+				lineRenderer.SetWidth(size/2,size/2	);
+				lineRenderer.SetVertexCount(0);
+				//lineRenderer.useWorldSpace = false;
+				//lineRenderer.transform.parent = canvas.transform;
+				index = 0;
+			}
+
 		}
 		if (Input.GetKeyUp(KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a && isPainting))
 		{
 			isPainting = false;
 			if (buffer.Count > 0 && brush == Brushes.Line) {
-				GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
+				lineRenderer.useWorldSpace = false;
+				lineRenderer.transform.parent = canvas.transform;
+				/*GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
 				LineRenderer lr = newLine.GetComponent<LineRenderer>();
 				
 				lr.material = new Material(Shader.Find("Particles/Additive"));
@@ -91,18 +132,14 @@ public class MainController : MonoBehaviour {
 				
 				for (int i = 0; i < buffer.Count ; ++i) {
 					Debug.Log("buffer "+i + " :" + buffer[i].transform.position.ToString("F4"));
-					/*
-					GameObject clone = Instantiate(cube, buffer[i].transform.position, Quaternion.identity) as GameObject;
-					clone.transform.localScale = new Vector3(clone.transform.localScale.x * size, clone.transform.localScale.y * size, clone.transform.localScale.z * size);
-					clone.transform.GetComponent<Renderer>().material.color = color;
-					clone.transform.parent = canvas.transform;
-					*/
+
 					
 					
 					lr.SetPosition(i,buffer[i].transform.position);
 				}
 				newLine.transform.parent = canvas.transform;
 				lr.useWorldSpace = false;
+				*/
 				foreach (GameObject obj in buffer) {
 					Destroy(obj);
 				}
