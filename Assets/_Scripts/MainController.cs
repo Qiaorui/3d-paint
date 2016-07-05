@@ -34,7 +34,7 @@ public class MainController : MonoBehaviour {
 
 	private Brushes brush;
     private bool isPainting;
-	private bool MenuOpen;
+	private bool menuOpen;
 
 
 
@@ -48,7 +48,7 @@ public class MainController : MonoBehaviour {
 		player.transform.GetComponent<Renderer> ().material.color = color;
         brush = Brushes.Sphere;
 		isPainting = false;
-		MenuOpen = false;
+		menuOpen = false;
 
 
 	}
@@ -104,22 +104,22 @@ public class MainController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.M) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
-			MenuOpen = true;
+			menuOpen = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.E) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home && MenuOpen)) {
+		if (Input.GetKeyDown (KeyCode.E) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home && menuOpen)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
-			MenuOpen = false;
+			menuOpen = false;
 		}
 
-		if (MenuOpen) {
+		if (menuOpen) {
 			menu.SetActive (true);
 		} else {
 			menu.SetActive (false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.P)||(WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
+		if (!menuOpen && Input.GetKeyDown(KeyCode.P)||(WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
 			isPainting = true;
@@ -139,7 +139,7 @@ public class MainController : MonoBehaviour {
 			}
 
 		}
-		if (Input.GetKeyUp(KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a && isPainting))
+		if (!menuOpen && Input.GetKeyUp(KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a && isPainting))
 		{
 			isPainting = false;
 			if (buffer.Count > 0 && brush == Brushes.Line) {
