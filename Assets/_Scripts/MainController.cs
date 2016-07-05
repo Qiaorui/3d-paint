@@ -21,7 +21,7 @@ public class MainController : MonoBehaviour {
 	public GameObject line;
 	public GameObject cube;
 	public GameObject gap;
-
+	public GameObject stream;
 
 
 
@@ -39,7 +39,7 @@ public class MainController : MonoBehaviour {
 
 
 
-    enum Brushes { Sphere, Line, Paint, Neon, Cube };
+    enum Brushes { Sphere, Line, Stream, Cube };
 
 	// Use this for initialization
 	void Start () {
@@ -71,9 +71,13 @@ public class MainController : MonoBehaviour {
 			clone.transform.GetComponent<Renderer>().material.color = color;
 			clone.transform.parent = canvas.transform;
 		}
-		
-		if (isPainting && brush == Brushes.Line)
+
+		if (isPainting && (brush == Brushes.Line || brush == Brushes.Stream))
 		{
+			for (int i = 0; i < index ; ++i) 
+			{
+				lineRenderer.SetPosition(i,buffer[i].transform.position);
+			}
 
 			if (Time.time > nextAction) 
 			{
@@ -87,10 +91,6 @@ public class MainController : MonoBehaviour {
 				lineRenderer.SetVertexCount(index+1);
 				lineRenderer.SetPosition(index, buffer[index].transform.position);
 				++index;
-			}
-			for (int i = 0; i < index ; ++i) 
-			{
-				lineRenderer.SetPosition(i,buffer[i].transform.position);
 			}
 
 		}
@@ -124,13 +124,16 @@ public class MainController : MonoBehaviour {
 				//clone.transform.parent = camera.transform;
 				isPainting = true;
 
-				if (brush == Brushes.Line) {
-					GameObject newLine = Instantiate (line, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+				if (brush == Brushes.Line || brush == Brushes.Stream) {
+					GameObject newLine = null;
+					if(brush == Brushes.Line) newLine = Instantiate (line, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+					if(brush == Brushes.Stream) newLine = Instantiate (stream, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+
 					lineRenderer = newLine.GetComponent<LineRenderer> ();
 				
-					lineRenderer.material = new Material (Shader.Find ("Particles/Alpha Blended"));
+					//lineRenderer.material = new Material (Shader.Find ("Particles/Alpha Blended"));
 					lineRenderer.SetColors (color, color);
-					lineRenderer.SetWidth (size / 2, size / 2);
+					lineRenderer.SetWidth (size, size);
 					lineRenderer.SetVertexCount (0);
 					//lineRenderer.useWorldSpace = false;
 					//lineRenderer.transform.parent = canvas.transform;
@@ -141,7 +144,7 @@ public class MainController : MonoBehaviour {
 	
 			if (Input.GetKeyUp (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && !WiimoteDemoButtons.clicked.b && isPainting)) {
 				isPainting = false;
-				if (buffer.Count > 0 && brush == Brushes.Line) {
+				if (brush == Brushes.Line || brush == Brushes.Stream) {
 					lineRenderer.useWorldSpace = false;
 					lineRenderer.transform.parent = canvas.transform;
 					/*GameObject newLine = Instantiate(line, new Vector3(0,0,0), Quaternion.identity) as GameObject;
