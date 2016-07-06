@@ -12,6 +12,7 @@ public class MainController : MonoBehaviour {
 	public float size = 1;
 
 	public GameObject player;
+	public GameObject cylinder;
 	public GameObject menu;
 	public GameObject drawing;
 	public Transform camera;
@@ -22,6 +23,9 @@ public class MainController : MonoBehaviour {
 	public GameObject line;
 	public GameObject cube;
 	public GameObject gap;
+	public GameObject menu1;
+	public GameObject menu2;
+	public GameObject menu3;
 
 
 
@@ -51,7 +55,9 @@ public class MainController : MonoBehaviour {
         brush = Brushes.Sphere;
 		isPainting = false;
 		menuOpen = false;
+		menu.SetActive (false);
 		selectedOption = "None";
+		//cylinder.SetActive (false);
 
 	}
 
@@ -113,27 +119,51 @@ public class MainController : MonoBehaviour {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
 			menuOpen = false;
+			menu.SetActive (false);
+			drawing.SetActive (true);
 		}
 
 		if (menuOpen) {
 			menu.SetActive (true);
 			drawing.SetActive (false);
+			//cylinder.SetActive (true);
 
 			RaycastHit ObstacleHit;
-
-			if(Physics.Raycast(player.transform.position, camera.position - player.transform.position , out ObstacleHit)){
+			Debug.DrawLine(camera.position, player.transform.position ,Color.green);
+			if (Physics.Raycast (player.transform.position, camera.position - player.transform.position, out ObstacleHit)) {
 				selectedOption = ObstacleHit.collider.tag;
-				Debug.DrawLine(camera.position - player.transform.position,ObstacleHit.point,Color.green);
-				Debug.Log("Hit an object");
+
+				Debug.Log ("Hit an object");
+				if (selectedOption == "Menu1") {
+					menu1.GetComponent<Renderer> ().material.color = Color.green;
+
+
+				} else if (selectedOption == "Menu2") {
+					menu2.GetComponent<Renderer> ().material.color = Color.green;
+
+					
+				} else if (selectedOption == "Menu3") {
+
+					menu3.GetComponent<Renderer> ().material.color = Color.green;
+
+				}
+				else{
+					menu1.GetComponent<Renderer> ().material.color = Color.blue;
+					menu2.GetComponent<Renderer> ().material.color = Color.blue;
+					menu3.GetComponent<Renderer> ().material.color = Color.blue;
+				}
+
+
+
+			} else {
+				selectedOption = "None";
+				menu1.GetComponent<Renderer> ().material.color = Color.blue;
+				menu2.GetComponent<Renderer> ().material.color = Color.blue;
+				menu3.GetComponent<Renderer> ().material.color = Color.blue;
 			}
 
-		} else {
-			menu.SetActive (false);
-			drawing.SetActive (true);
-
-
-
-		}
+		} 
+			
 		if (!menuOpen && !WiimoteDemoButtons.inspect) {
 			if (Input.GetKeyDown (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.b)) {
 				//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
