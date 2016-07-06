@@ -27,6 +27,9 @@ public class MainController : MonoBehaviour {
 	public GameObject menu2;
 	public GameObject menu3;
 
+	private double selectiontime;
+
+
 
 
 
@@ -41,6 +44,8 @@ public class MainController : MonoBehaviour {
     private bool isPainting;
 	private bool menuOpen;
 	private string selectedOption;
+	private string displayString;
+	private bool selected_menu;
 
 
 
@@ -57,6 +62,7 @@ public class MainController : MonoBehaviour {
 		menuOpen = false;
 		menu.SetActive (false);
 		selectedOption = "None";
+		selected_menu = false;
 		//cylinder.SetActive (false);
 
 	}
@@ -109,6 +115,16 @@ public class MainController : MonoBehaviour {
 	void Update () 
 	{
 		//turn on the menu
+		if(Time.time - selectiontime > 2  && selected_menu){
+
+			if (selectedOption == "Menu3") {
+				selected_menu = false;
+			}
+			if(Input.GetKeyDown (KeyCode.S)){
+				selected_menu = false;
+			}
+		}
+
 		if (Input.GetKeyDown (KeyCode.M) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.home)) {
 			//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
 			//clone.transform.parent = camera.transform;
@@ -123,7 +139,7 @@ public class MainController : MonoBehaviour {
 			drawing.SetActive (true);
 		}
 
-		if (menuOpen) {
+		if (menuOpen && !selected_menu) {
 			menu.SetActive (true);
 			drawing.SetActive (false);
 			//cylinder.SetActive (true);
@@ -136,15 +152,24 @@ public class MainController : MonoBehaviour {
 				Debug.Log ("Hit an object");
 				if (selectedOption == "Menu1") {
 					menu1.GetComponent<Renderer> ().material.color = Color.green;
-
-
+					if (Input.GetKeyDown (KeyCode.S) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
+						selected_menu = true;
+						selectiontime = Time.time;
+					}
 				} else if (selectedOption == "Menu2") {
 					menu2.GetComponent<Renderer> ().material.color = Color.green;
-
+					if (Input.GetKeyDown (KeyCode.S) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
+						selected_menu = true;
+						selectiontime = Time.time;
+					}
 					
 				} else if (selectedOption == "Menu3") {
 
 					menu3.GetComponent<Renderer> ().material.color = Color.green;
+					if (Input.GetKeyDown (KeyCode.S) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.a)) {
+						selected_menu = true;
+						selectiontime = Time.time;
+					}
 
 				}
 				else{
@@ -163,7 +188,32 @@ public class MainController : MonoBehaviour {
 			}
 
 		} 
+
+		if (selected_menu) {
 			
+
+			if (selectedOption == "Menu3") {
+				menu3.GetComponent<Renderer> ().material.color = Color.red;
+				int childs = canvas.childCount;
+				for (int i = childs - 1; i >= 0; i--)
+				{
+					GameObject.Destroy(canvas.GetChild(i).gameObject);
+				}
+
+				displayString = "Cleared the canvas";
+
+
+			} else if (selectedOption == "Menu2") {
+
+			   menu2.GetComponent<Renderer> ().material.color = Color.red;
+			   displayString = "Current Color";
+			}
+			
+		}
+
+
+
+
 		if (!menuOpen && !WiimoteDemoButtons.inspect) {
 			if (Input.GetKeyDown (KeyCode.P) || (WiimoteDemoButtons.wiiDetected && WiimoteDemoButtons.clicked.b)) {
 				//GameObject clone = Instantiate(line, marker.position, marker.rotation) as GameObject;
@@ -232,9 +282,16 @@ public class MainController : MonoBehaviour {
 	
 	void OnGUI()
 	{
+		GUI.color = Color.white;
 		GUILayout.Label("Press B to change Brush");
 		GUILayout.Label("Current brush : " + brush);
-		GUILayout.Label("Collided with : " + selectedOption);
+		if (menuOpen) {
+			if (selected_menu && selectedOption == "Menu2") {
+				GUI.color = color;
+			}
+			GUILayout.Label (displayString);
+		}
+		
 	}
 	
 }
