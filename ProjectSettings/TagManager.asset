@@ -11,6 +11,7 @@ TagManager:
   - Paint
   - Menu1
   - Menu2
+  - Menu3
   layers:
   - Default
   - TransparentFX
